@@ -1,4 +1,4 @@
-// Mobile Navigation Toggle
+// ── Mobile Navigation Toggle ─────────────────────────────────
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -18,9 +18,8 @@ if (navToggle) {
     });
 }
 
-// Close mobile menu when clicking on a link
-const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
+// Close mobile menu when clicking a nav link
+document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         if (navMenu && navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
@@ -32,7 +31,7 @@ navLinks.forEach(link => {
     });
 });
 
-// Active navigation link on scroll
+// ── Active nav link on scroll ────────────────────────────────
 const sections = document.querySelectorAll('section[id]');
 
 function scrollActive() {
@@ -51,7 +50,7 @@ function scrollActive() {
 }
 window.addEventListener('scroll', scrollActive);
 
-// Smooth scroll for navigation links
+// ── Smooth scroll ────────────────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -62,7 +61,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background on scroll
+// ── Navbar shadow on scroll ──────────────────────────────────
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -72,8 +71,8 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Intersection Observer for fade-in animations
-const observer = new IntersectionObserver((entries) => {
+// ── Fade-in animations (non-project sections) ────────────────
+const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
@@ -84,40 +83,17 @@ const observer = new IntersectionObserver((entries) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const animateElements = document.querySelectorAll(
-        '.experience-item, .project-card, .education-item, .skills-category, .certification-item'
+        '.experience-item, .education-item, .skills-category, .certification-item'
     );
     animateElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
-        observer.observe(el);
+        fadeObserver.observe(el);
     });
 });
 
-// Contact form handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(contactForm);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const message = formData.get('message');
-        const mailtoLink = `mailto:merghaniosman21@gmail.com?subject=Contact from ${name}&body=${encodeURIComponent(message + '\n\nFrom: ' + email)}`;
-        window.location.href = mailtoLink;
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Message Sent!';
-        submitButton.style.backgroundColor = '#e07b39';
-        setTimeout(() => {
-            submitButton.textContent = originalText;
-            submitButton.style.backgroundColor = '';
-            contactForm.reset();
-        }, 3000);
-    });
-}
-
-// Active class on nav click
+// ── Active class on nav click ────────────────────────────────
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function () {
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -125,58 +101,71 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Scroll to top button
+// ── Scroll to top button ─────────────────────────────────────
 (function createScrollTopButton() {
     const btn = document.createElement('button');
     btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
     btn.className = 'scroll-top-btn';
     btn.style.display = 'none';
     document.body.appendChild(btn);
-
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
     window.addEventListener('scroll', () => {
         btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
 })();
 
-// ═══════════════════════════════════════════════════════════
-// PROJECT PANELS — slideshow + in-view animation + progress pips
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+// PROJECT PANELS — Slideshow + scroll-snap pips
+// ═══════════════════════════════════════════════════════════════
 
-// FIX 1: The HTML uses .slide / .slideshow-prev / .slideshow-next / .slideshow-dots
-//         and calls changeSlide(). This function was missing entirely.
-//         Renamed helpers to match the actual HTML class names.
-
+/** Get all .slide elements inside a .slideshow-container */
 function getSlides(container) {
     return Array.from(container.querySelectorAll('.slide'));
 }
+
+/** Get all dot buttons inside a .slideshow-container */
 function getSlideDots(container) {
     return Array.from(container.querySelectorAll('.slideshow-dot'));
 }
 
+/**
+ * Show a specific slide by index and update dots.
+ * Stores current index on the container element.
+ */
 function showSlide(container, idx) {
     const slides = getSlides(container);
     const dots = getSlideDots(container);
-    slides.forEach(s => s.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
-    if (slides[idx]) slides[idx].classList.add('active');
-    if (dots[idx]) dots[idx].classList.add('active');
+    const total = slides.length;
+    if (total === 0) return;
+
+    // Clamp/wrap index
+    idx = ((idx % total) + total) % total;
+
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     container._curIdx = idx;
 }
 
-// Called by onclick="changeSlide(this, 1)" / "changeSlide(this, -1)" in HTML
+/**
+ * Called by onclick="changeSlide(this, 1)" or changeSlide(this, -1) in HTML.
+ * `btn` is the prev/next arrow button; `dir` is +1 or -1.
+ */
 function changeSlide(btn, dir) {
     const container = btn.closest('.slideshow-container');
+    if (!container) return;
     const slides = getSlides(container);
     if (slides.length <= 1) return;
+
     const cur = container._curIdx ?? 0;
     const next = ((cur + dir) + slides.length) % slides.length;
     showSlide(container, next);
+
+    // Reset autoplay timer on manual interaction
     clearInterval(container._autoplay);
     startSlideAutoplay(container);
 }
 
+/** Start 3.5-second autoplay for a given slideshow container */
 function startSlideAutoplay(container) {
     const slides = getSlides(container);
     if (slides.length <= 1) return;
@@ -186,6 +175,7 @@ function startSlideAutoplay(container) {
     }, 3500);
 }
 
+/** Fully initialise all project panels: slideshows, dots, pips, observers */
 function initProjectPanels() {
     const scrollEl = document.getElementById('projectsScroll');
     const progressEl = document.getElementById('projectsProgress');
@@ -194,7 +184,7 @@ function initProjectPanels() {
     const panels = Array.from(scrollEl.querySelectorAll('.project-panel'));
     if (!panels.length) return;
 
-    // ── Set up each panel's slideshow ────────────────────
+    // ── Set up each panel's slideshow ─────────────────────────
     panels.forEach(panel => {
         const container = panel.querySelector('.slideshow-container');
         if (!container) return;
@@ -204,22 +194,23 @@ function initProjectPanels() {
         const prevBtn = container.querySelector('.slideshow-prev');
         const nextBtn = container.querySelector('.slideshow-next');
 
+        // Initialise index and ensure first slide is active
         container._curIdx = 0;
-
-        // Make sure first slide is active
-        if (slides[0]) slides[0].classList.add('active');
+        showSlide(container, 0);
 
         if (slides.length <= 1) {
+            // Hide controls when there's only one image
             if (prevBtn) prevBtn.style.display = 'none';
             if (nextBtn) nextBtn.style.display = 'none';
             if (dotsEl)  dotsEl.style.display  = 'none';
         } else {
-            // Build dot buttons
+            // Build dot buttons dynamically
             if (dotsEl) {
                 dotsEl.innerHTML = '';
                 slides.forEach((_, i) => {
                     const dot = document.createElement('button');
                     dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', `Slide ${i + 1}`);
                     dot.addEventListener('click', () => {
                         showSlide(container, i);
                         clearInterval(container._autoplay);
@@ -230,7 +221,7 @@ function initProjectPanels() {
             }
             startSlideAutoplay(container);
 
-            // Pause on hover
+            // Pause autoplay while hovering the image side
             const panelImage = panel.querySelector('.panel-image');
             if (panelImage) {
                 panelImage.addEventListener('mouseenter', () => clearInterval(container._autoplay));
@@ -239,7 +230,7 @@ function initProjectPanels() {
         }
     });
 
-    // ── Progress pips ────────────────────────────────────
+    // ── Build progress pips ────────────────────────────────────
     progressEl.innerHTML = '';
     panels.forEach((_, i) => {
         const pip = document.createElement('button');
@@ -253,25 +244,32 @@ function initProjectPanels() {
 
     const pips = Array.from(progressEl.querySelectorAll('.progress-pip'));
 
-    // FIX 2: Add 'in-view' class to panels so CSS staggered animations fire.
-    //         Also update progress pips here.
+    // ── IntersectionObserver: update pips + trigger in-view animations ──
     const panelObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            const idx = parseInt(entry.target.getAttribute('data-index'));
+            const idx = parseInt(entry.target.getAttribute('data-index'), 10);
             if (entry.isIntersecting) {
+                // Trigger staggered CSS animations on content elements
                 entry.target.classList.add('in-view');
+                // Update which pip is active
                 pips.forEach((p, i) => p.classList.toggle('active', i === idx));
             }
-            // Note: we keep in-view once added so content stays visible on scroll back
+            // Note: once 'in-view' is added we keep it so content stays
+            // visible if the user scrolls back — we don't remove the class.
         });
-    }, { root: scrollEl, threshold: 0.45 });
+    }, {
+        root: scrollEl,
+        threshold: 0.45   // fire when panel is nearly centered
+    });
 
-    panels.forEach(p => panelObserver.observe(p));
+    panels.forEach(panel => panelObserver.observe(panel));
 
-    // ── Keyboard nav ─────────────────────────────────────
+    // ── Keyboard navigation (Arrow Up / Down) ──────────────────
     document.addEventListener('keydown', (e) => {
         const rect = scrollEl.getBoundingClientRect();
+        // Only intercept keys while the projects scroll area is visible
         if (rect.top > window.innerHeight || rect.bottom < 0) return;
+
         const curIdx = pips.findIndex(p => p.classList.contains('active'));
         if (e.key === 'ArrowDown' && curIdx < panels.length - 1) {
             e.preventDefault();
@@ -284,3 +282,27 @@ function initProjectPanels() {
 }
 
 document.addEventListener('DOMContentLoaded', initProjectPanels);
+
+// ── Contact form ─────────────────────────────────────────────
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(contactForm);
+        const name    = formData.get('name');
+        const email   = formData.get('email');
+        const message = formData.get('message');
+        const mailtoLink = `mailto:merghaniosman21@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message + '\n\nFrom: ' + email)}`;
+        window.location.href = mailtoLink;
+
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Message Sent!';
+        submitButton.style.backgroundColor = '#e07b39';
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.style.backgroundColor = '';
+            contactForm.reset();
+        }, 3000);
+    });
+}
