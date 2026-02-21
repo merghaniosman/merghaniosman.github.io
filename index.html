@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -41,7 +41,7 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Hello,<br>I'm <span class="highlight">Merghani Osman</span></h1>
-                    <p class="hero-subtitle">Product Design Engineer focused on mechanical and electro‑mechanical systems for high‑volume consumer electronics. Experience owning components from concept through production, with strong cross‑functional collaboration across Electrical Engineering, Industrial Design, and manufacturing.</p>
+                    <p class="hero-subtitle"></p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn btn-primary">View My Work</a>
                         <a href="#contact" class="btn btn-secondary">Get In Touch</a>
@@ -70,8 +70,8 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <p>I'm a passionate Mechanical Engineering student at Texas A&M University, specializing in Design for Manufacturability (DFM) and Assembly (DFA) with hands-on experience in CAD design, tolerance analysis, and high-volume manufacturing. I've worked on cutting-edge projects including precision fixture design, electro-mechanical integration, and autonomous vehicle systems.</p>
-                <p>My experience spans from leading DOE studies and tolerance stack-up analysis at Flex, to designing modular racking systems for SAE AutoDrive autonomous vehicles, and managing rapid prototyping workflows. I'm always eager to tackle new challenges in mechanical design and manufacturing, with a strong foundation in both engineering principles and practical application.</p>
+                <p>I'm a passionate Mechanical Engineer at Flex. I've worked on cutting-edge projects including precision fixture design, electro-mechanical integration, and autonomous vehicle systems.</p>
+                <p>My experience spans from designing modular racking systems for SAE AutoDrive autonomous vehicles, and managing rapid prototyping workflows. I'm always eager to tackle new challenges in mechanical design and manufacturing, with a strong foundation in both engineering principles and practical application.</p>
             </div>
         </div>
     </section>
@@ -108,7 +108,7 @@
                         <h4>Flex · Austin, TX</h4>
                     </div>
                     <ul class="experience-details">
-                        <li>Led DOE studies to evaluate mechanical performance and Statistical Process Controls (SPC), identifying process inefficiencies and achieving >$40K in annual cost savings.</li>
+                        <li>Led DOE studies to evaluate Statistical Process Controls (SPC), identifying process inefficiencies and achieving >$40K in annual cost savings.</li>
                         <li>Engineered high-precision nesting fixtures, prioritizing DFM/DFA for high-volume manufacturing.</li>
                         <li>Performed 2D tolerance stack-up analysis to ensure clearances in high-density electro-mechanical assemblies.</li>
                         <li>Resolved mechanical interference and fitment issues by collaborating directly with EE and Industrial Design teams during the prototype-to-production handoff.</li>
@@ -148,51 +148,46 @@
 
     <!-- Projects Section -->
     <section id="projects" class="projects">
-        <div class="container">
+        <div class="projects-header container">
             <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image-slideshow" data-project="server-rack">
+        </div>
+
+        <!-- Fixed progress pips — controlled by JS -->
+        <div class="projects-progress" id="projectsProgress"></div>
+
+        <!-- Scroll-snap container -->
+        <div class="projects-scroll" id="projectsScroll">
+
+            <!-- PROJECT 01 — Server Rack -->
+            <div class="project-panel" data-index="0">
+                <div class="panel-image">
+                    <div class="project-image-slideshow">
                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202614.png" alt="Server Rack Design" onerror="this.parentElement.parentElement.innerHTML='<div class=\'project-image-placeholder\'><i class=\'fas fa-server\'></i><p>Project Image</p></div>'">
+                                <img src="serverrackdesign1.jpg" alt="Server Rack Physical Install">
                             </div>
                             <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202650.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202715.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202738.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202806.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202831.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202847.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/1749521577299.jpg" alt="Server Rack" onerror="this.style.display='none'">
+                                <img src="serverrackdesign2.png" alt="Server Rack FLIR Thermal Analysis">
                             </div>
                             <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
                             <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
                             <div class="slideshow-dots"></div>
                         </div>
                     </div>
-                    <div class="project-content">
+                </div>
+                <div class="panel-content">
+                    <span class="panel-number">01</span>
+                    <div class="panel-content-inner">
+                        <p class="panel-meta">Mechanical Design · SAE AutoDrive</p>
                         <h3>Modular Server Rack Design</h3>
                         <h4>SAE AutoDrive Challenge II – Autonomous Vehicle</h4>
-                        <p>Redesigned server rack system with modular sliding drawer architecture, reducing server removal time from 60-90 minutes to under 5 minutes and eliminating thermal shutdowns through directed airflow management.</p>
+                        <p class="panel-desc">Redesigned server rack system with modular sliding drawer architecture, reducing server removal time from 60–90 min to under 5 minutes and eliminating thermal shutdowns through directed airflow management.</p>
                         <ul class="project-features">
                             <li>Full-extension sliding drawer on heavy-duty rails for rapid access</li>
-                            <li>Aluminum T-slot structural frame (80/20 system) for high stiffness-to-weight ratio</li>
+                            <li>Aluminum T-slot structural frame (80/20) for high stiffness-to-weight ratio</li>
                             <li>FEA-guided material selection balancing rigidity and spatial constraints</li>
-                            <li>Thermal management via dedicated ducting system maintaining CPU temps below 75°C</li>
-                            <li>Total rack mass ~118 lbs, height 14.75 inches within vehicle constraints</li>
+                            <li>Thermal management via ducting system — CPU temps below 75°C</li>
+                            <li>Total rack mass ~118 lbs, height 14.75 in within vehicle constraints</li>
                         </ul>
                         <div class="project-tags">
                             <span class="tag">SolidWorks</span>
@@ -207,25 +202,29 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image-slideshow" data-project="grippers">
+            <!-- PROJECT 02 — Gripper Jaw -->
+            <div class="project-panel" data-index="1">
+                <div class="panel-image">
+                    <div class="project-image-slideshow">
                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="Grippers Design/Gripper Design.png" alt="Gripper Design" onerror="this.parentElement.parentElement.innerHTML='<div class=\'project-image-placeholder\'><i class=\'fas fa-robot\'></i><p>Project Image</p></div>'">
-                            </div>
-                            <div class="slide">
-                                <img src="Grippers Design/Grippers.png" alt="Grippers" onerror="this.style.display='none'">
+                                <img src="GripperDesign.png" alt="Gripper Jaw CAD Design">
                             </div>
                             <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
                             <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
                             <div class="slideshow-dots"></div>
                         </div>
                     </div>
-                    <div class="project-content">
+                </div>
+                <div class="panel-content">
+                    <span class="panel-number">02</span>
+                    <div class="panel-content-inner">
+                        <p class="panel-meta">Product Design · Flex Austin</p>
                         <h3>Gripper Jaw Redesign for ASIC-Safe SMT Handling</h3>
                         <h4>Product Design / Flex Austin</h4>
-                        <p>Redesigned front gripper jaw with notched geometry to eliminate ASIC chip contact risk, dramatically reducing alignment sensitivity and downtime while maintaining secure part handling.</p>
+                        <p class="panel-desc">Redesigned front gripper jaw with notched geometry to eliminate ASIC chip contact risk, dramatically reducing alignment sensitivity and downtime while maintaining secure part handling.</p>
                         <ul class="project-features">
                             <li>Notched front jaw geometry creating controlled pass-over region above ASIC</li>
                             <li>Tapered notch profile preserving holding force while reducing stress</li>
@@ -240,27 +239,36 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image-slideshow" data-project="heat-sink">
+            <!-- PROJECT 03 — Heat Sink Tool -->
+            <div class="project-panel" data-index="2">
+                <div class="panel-image">
+                    <div class="project-image-slideshow">
                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="Modular TPU Laser Marking/Heat Sink Installer.gif" alt="Heat Sink Installer" onerror="this.parentElement.parentElement.innerHTML='<div class=\'project-image-placeholder\'><i class=\'fas fa-thermometer-half\'></i><p>Project Image</p></div>'">
+                                <img src="heatsink1.gif" alt="Heat Sink Installer in Action">
+                            </div>
+                            <div class="slide">
+                                <img src="heatsink2.png" alt="Heat Sink Installer CAD">
                             </div>
                             <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
                             <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
                             <div class="slideshow-dots"></div>
                         </div>
                     </div>
-                    <div class="project-content">
+                </div>
+                <div class="panel-content">
+                    <span class="panel-number">03</span>
+                    <div class="panel-content-inner">
+                        <p class="panel-meta">Product Design · Manufacturing Tool</p>
                         <h3>Modular Heat Sink Installation Tool</h3>
                         <h4>Product Design</h4>
-                        <p>Designed a production-ready modular heat sink installer with interchangeable components for multiple heat sink geometries, eliminating fin deformation and improving installation repeatability.</p>
+                        <p class="panel-desc">Designed a production-ready modular heat sink installer with interchangeable components</p>
                         <ul class="project-features">
                             <li>Interchangeable 3D-printed contact interfaces for different profiles</li>
                             <li>Selective infill strategy for load-bearing regions using PETG material</li>
-                            <li>Mechanical reinforcement with M4 fasteners for durability</li>
-                            <li>Controlled force application ensuring even distribution</li>
+            
                         </ul>
                         <div class="project-tags">
                             <span class="tag">3D Printing</span>
@@ -270,25 +278,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image-slideshow" data-project="tpu-laser">
+            <!-- PROJECT 04 — TPU Laser Marking -->
+            <div class="project-panel" data-index="3">
+                <div class="panel-image">
+                    <div class="project-image-slideshow">
                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="Modular TPU Laser Marking/Laser Marking Fulll CAD.png" alt="TPU Laser Marking Full CAD" onerror="this.parentElement.parentElement.innerHTML='<div class=\'project-image-placeholder\'><i class=\'fas fa-laser-pointer\'></i><p>Project Image</p></div>'">
+                                <img src="lasermarking.png" alt="TPU Laser Marking Fixture CAD">
                             </div>
                             <div class="slide">
-                                <img src="Modular TPU Laser Marking/Laser Marking PCBA section.png" alt="TPU Laser Marking PCBA Section" onerror="this.style.display='none'">
+                                <img src="lasermarking2.png" alt="TPU Laser Marking Fixture in Machine">
                             </div>
                             <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
                             <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
                             <div class="slideshow-dots"></div>
                         </div>
                     </div>
-                    <div class="project-content">
+                </div>
+                <div class="panel-content">
+                    <span class="panel-number">04</span>
+                    <div class="panel-content-inner">
+                        <p class="panel-meta">Product Design · Flex Austin</p>
                         <h3>Modular TPU Laser-Marking Fixture</h3>
                         <h4>Product Design / Flex Austin</h4>
-                        <p>Redesigned laser-marking fixture to eliminate label snagging during PCBA indexing, using TPU material with localized stiffness control and an interchangeable wing system for rapid part variant changes.</p>
+                        <p class="panel-desc">Redesigned laser-marking fixture to eliminate label snagging during PCBA indexing, using TPU material with localized stiffness control and an interchangeable wing system for rapid part variant changes.</p>
                         <ul class="project-features">
                             <li>Seam-aware print orientation eliminating label snagging</li>
                             <li>TPU material with localized infill modifiers for edge compliance</li>
@@ -303,25 +318,29 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image-slideshow" data-project="spacecraft">
+            <!-- PROJECT 05 — SpaceCraftVR -->
+            <div class="project-panel" data-index="4">
+                <div class="panel-image">
+                    <div class="project-image-slideshow">
                         <div class="slideshow-container">
                             <div class="slide active">
-                                <img src="SpaceCraftVR Backend Physics Integration/Screenshot 2026-01-20 205921.jpg" alt="SpaceCraftVR Mars Base" onerror="this.parentElement.parentElement.innerHTML='<div class=\'project-image-placeholder\'><i class=\'fas fa-rocket\'></i><p>Project Image</p></div>'">
-                            </div>
-                            <div class="slide">
-                                <img src="SpaceCraftVR Backend Physics Integration/Screenshot 2026-01-20 205940.jpg" alt="SpaceCraftVR Rover" onerror="this.style.display='none'">
+                                <img src="spacecraftvr.png" alt="SpaceCraftVR Mars Base Simulation">
                             </div>
                             <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
                             <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
                             <div class="slideshow-dots"></div>
                         </div>
                     </div>
-                    <div class="project-content">
+                </div>
+                <div class="panel-content">
+                    <span class="panel-number">05</span>
+                    <div class="panel-content-inner">
+                        <p class="panel-meta">Physics Simulation · C++ / Unreal Engine</p>
                         <h3>SpaceCraftVR Backend Physics Integration</h3>
                         <h4>Gas Pressurization & Force Simulation</h4>
-                        <p>Developed C++ gas pressurization and force simulation models for modular spacecraft environments, enabling realistic airlock and depressurization scenarios in virtual reality.</p>
+                        <p class="panel-desc">Developed C++ gas pressurization and force simulation models for modular spacecraft environments, enabling realistic airlock and depressurization scenarios in virtual reality.</p>
                         <ul class="project-features">
                             <li>Data-driven gas pressurization using Ideal Gas Law</li>
                             <li>Graph-based architecture for arbitrary module configurations</li>
@@ -337,7 +356,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+        </div><!-- /projects-scroll -->
     </section>
 
     <!-- Skills Section -->
@@ -388,12 +408,12 @@
             <h2 class="section-title">Certifications</h2>
             <div class="certifications-list">
                 <div class="certification-item">
-                    <h3>SolidWorks Certification</h3>
-                    <p>Certified in SolidWorks CAD software</p>
+                    <h3>HAM Radio License</h3>
+                    <p></p>
                 </div>
                 <div class="certification-item">
                     <h3>Autodesk Inventor Certification</h3>
-                    <p>Certified in Autodesk Inventor CAD software</p>
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -408,7 +428,7 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:merghaniosman21@gmail.com">merghaniosman21@gmail.com</a>
+                        <a href="/cdn-cgi/l/email-protection#204d45524748414e494f534d414e121160474d41494c0e434f4d"><span class="__cf_email__" data-cfemail="29444c5b4e41484740465a4448471b18694e44484045074a4644"><span class="__cf_email__" data-cfemail="a3cec6d1c4cbc2cdcaccd0cec2cd9192e3c4cec2cacf8dc0ccce">[email&#160;protected]</span></span></a>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
@@ -437,15 +457,4 @@
                 </form>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Merghani Osman. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    </sec
