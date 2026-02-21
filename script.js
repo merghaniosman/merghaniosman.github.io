@@ -141,45 +141,48 @@ document.querySelectorAll('.nav-link').forEach(link => {
 })();
 
 // ═══════════════════════════════════════════════════════════
-// PROJECT PANELS — image switcher + scroll-snap progress pips
+// PROJECT PANELS — slideshow + in-view animation + progress pips
 // ═══════════════════════════════════════════════════════════
 
-function getPanelImgs(panelImage) {
-    return Array.from(panelImage.querySelectorAll('.panel-img'));
+// FIX 1: The HTML uses .slide / .slideshow-prev / .slideshow-next / .slideshow-dots
+//         and calls changeSlide(). This function was missing entirely.
+//         Renamed helpers to match the actual HTML class names.
+
+function getSlides(container) {
+    return Array.from(container.querySelectorAll('.slide'));
 }
-function getPanelDots(panelImage) {
-    return Array.from(panelImage.querySelectorAll('.panel-dot'));
+function getSlideDots(container) {
+    return Array.from(container.querySelectorAll('.slideshow-dot'));
 }
 
-function showPanelImg(panelImage, idx) {
-    const imgs = getPanelImgs(panelImage);
-    const dots = getPanelDots(panelImage);
-    imgs.forEach(img => img.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    if (imgs[idx]) imgs[idx].classList.add('active');
+function showSlide(container, idx) {
+    const slides = getSlides(container);
+    const dots = getSlideDots(container);
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    if (slides[idx]) slides[idx].classList.add('active');
     if (dots[idx]) dots[idx].classList.add('active');
-    panelImage._curIdx = idx;
+    container._curIdx = idx;
 }
 
-// Called by onclick="panelSlide(this, 1)" in HTML
-function panelSlide(btn, dir) {
-    const panelImage = btn.closest('.panel-image');
-    const imgs = getPanelImgs(panelImage);
-    if (imgs.length <= 1) return;
-    const cur = panelImage._curIdx ?? 0;
-    const next = ((cur + dir) + imgs.length) % imgs.length;
-    showPanelImg(panelImage, next);
-    // Reset autoplay
-    clearInterval(panelImage._autoplay);
-    startAutoplay(panelImage);
+// Called by onclick="changeSlide(this, 1)" / "changeSlide(this, -1)" in HTML
+function changeSlide(btn, dir) {
+    const container = btn.closest('.slideshow-container');
+    const slides = getSlides(container);
+    if (slides.length <= 1) return;
+    const cur = container._curIdx ?? 0;
+    const next = ((cur + dir) + slides.length) % slides.length;
+    showSlide(container, next);
+    clearInterval(container._autoplay);
+    startSlideAutoplay(container);
 }
 
-function startAutoplay(panelImage) {
-    const imgs = getPanelImgs(panelImage);
-    if (imgs.length <= 1) return;
-    panelImage._autoplay = setInterval(() => {
-        const cur = panelImage._curIdx ?? 0;
-        showPanelImg(panelImage, (cur + 1) % imgs.length);
+function startSlideAutoplay(container) {
+    const slides = getSlides(container);
+    if (slides.length <= 1) return;
+    container._autoplay = setInterval(() => {
+        const cur = container._curIdx ?? 0;
+        showSlide(container, (cur + 1) % slides.length);
     }, 3500);
 }
 
@@ -191,18 +194,22 @@ function initProjectPanels() {
     const panels = Array.from(scrollEl.querySelectorAll('.project-panel'));
     if (!panels.length) return;
 
-    // ── Set up each panel's image switcher ──────────────
+    // ── Set up each panel's slideshow ────────────────────
     panels.forEach(panel => {
-        const panelImage = panel.querySelector('.panel-image');
-        const imgs = getPanelImgs(panelImage);
-        const dotsEl = panelImage.querySelector('.panel-dots');
-        const prevBtn = panelImage.querySelector('.panel-prev');
-        const nextBtn = panelImage.querySelector('.panel-next');
+        const container = panel.querySelector('.slideshow-container');
+        if (!container) return;
 
-        panelImage._curIdx = 0;
+        const slides = getSlides(container);
+        const dotsEl = container.querySelector('.slideshow-dots');
+        const prevBtn = container.querySelector('.slideshow-prev');
+        const nextBtn = container.querySelector('.slideshow-next');
 
-        if (imgs.length <= 1) {
-            // Hide nav controls when there's only one image
+        container._curIdx = 0;
+
+        // Make sure first slide is active
+        if (slides[0]) slides[0].classList.add('active');
+
+        if (slides.length <= 1) {
             if (prevBtn) prevBtn.style.display = 'none';
             if (nextBtn) nextBtn.style.display = 'none';
             if (dotsEl)  dotsEl.style.display  = 'none';
@@ -210,21 +217,25 @@ function initProjectPanels() {
             // Build dot buttons
             if (dotsEl) {
                 dotsEl.innerHTML = '';
-                imgs.forEach((_, i) => {
+                slides.forEach((_, i) => {
                     const dot = document.createElement('button');
-                    dot.className = 'panel-dot' + (i === 0 ? ' active' : '');
+                    dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
                     dot.addEventListener('click', () => {
-                        showPanelImg(panelImage, i);
-                        clearInterval(panelImage._autoplay);
-                        startAutoplay(panelImage);
+                        showSlide(container, i);
+                        clearInterval(container._autoplay);
+                        startSlideAutoplay(container);
                     });
                     dotsEl.appendChild(dot);
                 });
             }
-            // Autoplay
-            startAutoplay(panelImage);
-            panelImage.addEventListener('mouseenter', () => clearInterval(panelImage._autoplay));
-            panelImage.addEventListener('mouseleave', () => startAutoplay(panelImage));
+            startSlideAutoplay(container);
+
+            // Pause on hover
+            const panelImage = panel.querySelector('.panel-image');
+            if (panelImage) {
+                panelImage.addEventListener('mouseenter', () => clearInterval(container._autoplay));
+                panelImage.addEventListener('mouseleave', () => startSlideAutoplay(container));
+            }
         }
     });
 
@@ -242,17 +253,20 @@ function initProjectPanels() {
 
     const pips = Array.from(progressEl.querySelectorAll('.progress-pip'));
 
-    // ── IntersectionObserver for pip tracking ────────────
-    const observer = new IntersectionObserver((entries) => {
+    // FIX 2: Add 'in-view' class to panels so CSS staggered animations fire.
+    //         Also update progress pips here.
+    const panelObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            const idx = parseInt(entry.target.getAttribute('data-index'));
             if (entry.isIntersecting) {
-                const idx = parseInt(entry.target.getAttribute('data-index'));
+                entry.target.classList.add('in-view');
                 pips.forEach((p, i) => p.classList.toggle('active', i === idx));
             }
+            // Note: we keep in-view once added so content stays visible on scroll back
         });
-    }, { root: scrollEl, threshold: 0.55 });
+    }, { root: scrollEl, threshold: 0.45 });
 
-    panels.forEach(p => observer.observe(p));
+    panels.forEach(p => panelObserver.observe(p));
 
     // ── Keyboard nav ─────────────────────────────────────
     document.addEventListener('keydown', (e) => {
