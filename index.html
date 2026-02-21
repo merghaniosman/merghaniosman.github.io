@@ -152,46 +152,18 @@
             <h2 class="section-title">Projects</h2>
         </div>
 
-        <!-- Fixed progress pips — controlled by JS -->
         <div class="projects-progress" id="projectsProgress"></div>
 
-        <!-- Scroll-snap container -->
         <div class="projects-scroll" id="projectsScroll">
 
-            <!-- PROJECT 01 — Server Rack -->
+            <!-- PROJECT 01 -->
             <div class="project-panel" data-index="0">
                 <div class="panel-image">
-                    <div class="project-image-slideshow">
-                        <div class="slideshow-container">
-                            <div class="slide active">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202614.png" alt="Server Rack Design" onerror="this.parentElement.style.background='var(--bg-raised)'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202650.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202715.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202738.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202806.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202831.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/Screenshot 2026-01-20 202847.png" alt="Server Rack" onerror="this.style.display='none'">
-                            </div>
-                            <div class="slide">
-                                <img src="Server Rack Design/1749521577299.jpg" alt="Server Rack Physical" onerror="this.style.display='none'">
-                            </div>
-                            <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
-                            <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
-                            <div class="slideshow-dots"></div>
-                        </div>
-                    </div>
+                    <img class="panel-img active" src="serverrackdesign1.jpg" alt="Server Rack Physical">
+                    <img class="panel-img" src="serverrackdesign2.png" alt="Server Rack Thermal">
+                    <button class="panel-prev" onclick="panelSlide(this,-1)">&#10094;</button>
+                    <button class="panel-next" onclick="panelSlide(this,1)">&#10095;</button>
+                    <div class="panel-dots"></div>
                 </div>
                 <div class="panel-content">
                     <span class="panel-number">01</span>
@@ -204,8 +176,8 @@
                             <li>Full-extension sliding drawer on heavy-duty rails for rapid access</li>
                             <li>Aluminum T-slot structural frame (80/20) for high stiffness-to-weight ratio</li>
                             <li>FEA-guided material selection balancing rigidity and spatial constraints</li>
-                            <li>Thermal management via ducting system — CPU temps below 75°C</li>
-                            <li>Total rack mass ~118 lbs, height 14.75 in within vehicle constraints</li>
+                            <li>Thermal ducting system — CPU temps below 75°C</li>
+                            <li>Total rack mass ~118 lbs, 14.75 in height within vehicle constraints</li>
                         </ul>
                         <div class="project-tags">
                             <span class="tag">SolidWorks</span>
@@ -213,31 +185,17 @@
                             <span class="tag">Thermal Analysis</span>
                             <span class="tag">Aluminum T-Slot</span>
                         </div>
-                        <div class="project-links">
-                            <a href="Server Rack Design/Texas_A&M_UnivThe_12th_Unmanned{#014)-Concept-AutoDrive_Challenge_II_-_Year_4 (2).pdf" target="_blank" class="report-link">
-                                <i class="fas fa-file-pdf"></i> View Report (PDF)
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PROJECT 02 — Gripper Jaw -->
+            <!-- PROJECT 02 -->
             <div class="project-panel" data-index="1">
                 <div class="panel-image">
-                    <div class="project-image-slideshow">
-                        <div class="slideshow-container">
-                            <div class="slide active">
-                                <img src="Grippers Design/Gripper Design.png" alt="Gripper Design" onerror="this.parentElement.style.background='var(--bg-raised)'">
-                            </div>
-                            <div class="slide">
-                                <img src="Grippers Design/Grippers.png" alt="Grippers" onerror="this.style.display='none'">
-                            </div>
-                            <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
-                            <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
-                            <div class="slideshow-dots"></div>
-                        </div>
-                    </div>
+                    <img class="panel-img active" src="GripperDesign.png" alt="Gripper Design">
+                    <button class="panel-prev" onclick="panelSlide(this,-1)">&#10094;</button>
+                    <button class="panel-next" onclick="panelSlide(this,1)">&#10095;</button>
+                    <div class="panel-dots"></div>
                 </div>
                 <div class="panel-content">
                     <span class="panel-number">02</span>
@@ -250,7 +208,7 @@
                             <li>Notched front jaw geometry creating controlled pass-over region above ASIC</li>
                             <li>Tapered notch profile preserving holding force while reducing stress</li>
                             <li>Optimized contact strategy reducing unnecessary surface contact</li>
-                            <li>Material continuity using 304 stainless steel for seamless drop-in replacement</li>
+                            <li>304 stainless steel for seamless drop-in replacement</li>
                         </ul>
                         <div class="project-tags">
                             <span class="tag">Manufacturing Tools</span>
@@ -262,19 +220,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 03 — Heat Sink Tool -->
+            <!-- PROJECT 03 -->
             <div class="project-panel" data-index="2">
                 <div class="panel-image">
-                    <div class="project-image-slideshow">
-                        <div class="slideshow-container">
-                            <div class="slide active">
-                                <img src="Modular TPU Laser Marking/Heat Sink Installer.gif" alt="Heat Sink Installer" onerror="this.parentElement.style.background='var(--bg-raised)'">
-                            </div>
-                            <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
-                            <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
-                            <div class="slideshow-dots"></div>
-                        </div>
-                    </div>
+                    <img class="panel-img active" src="heatsink1.gif" alt="Heat Sink Installer Animation">
+                    <img class="panel-img" src="heatsink2.png" alt="Heat Sink Installer CAD">
+                    <button class="panel-prev" onclick="panelSlide(this,-1)">&#10094;</button>
+                    <button class="panel-next" onclick="panelSlide(this,1)">&#10095;</button>
+                    <div class="panel-dots"></div>
                 </div>
                 <div class="panel-content">
                     <span class="panel-number">03</span>
@@ -282,11 +235,12 @@
                         <p class="panel-meta">Product Design · Manufacturing Tool</p>
                         <h3>Modular Heat Sink Installation Tool</h3>
                         <h4>Product Design</h4>
-                        <p class="panel-desc">Designed a production-ready modular heat sink installer with interchangeable components</p>
+                        <p class="panel-desc">Designed a production-ready modular heat sink installer with interchangeable components for multiple heat sink geometries, eliminating fin deformation and improving installation repeatability.</p>
                         <ul class="project-features">
                             <li>Interchangeable 3D-printed contact interfaces for different profiles</li>
-                            <li>Selective infill strategy for load-bearing regions using PETG material</li>
-            
+                            <li>Selective infill strategy for load-bearing regions using PETG</li>
+                            <li>Mechanical reinforcement with M4 fasteners for durability</li>
+                            <li>Controlled force application ensuring even pressure distribution</li>
                         </ul>
                         <div class="project-tags">
                             <span class="tag">3D Printing</span>
@@ -298,22 +252,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 04 — TPU Laser Marking -->
+            <!-- PROJECT 04 -->
             <div class="project-panel" data-index="3">
                 <div class="panel-image">
-                    <div class="project-image-slideshow">
-                        <div class="slideshow-container">
-                            <div class="slide active">
-                                <img src="Modular TPU Laser Marking/Laser Marking Fulll CAD.png" alt="TPU Laser Marking Full CAD" onerror="this.parentElement.style.background='var(--bg-raised)'">
-                            </div>
-                            <div class="slide">
-                                <img src="Modular TPU Laser Marking/Laser Marking PCBA section.png" alt="TPU Laser Marking PCBA Section" onerror="this.style.display='none'">
-                            </div>
-                            <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
-                            <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
-                            <div class="slideshow-dots"></div>
-                        </div>
-                    </div>
+                    <img class="panel-img active" src="lasermarking.png" alt="TPU Laser Marking Fixture CAD">
+                    <img class="panel-img" src="lasermarking2.png" alt="TPU Laser Marking in Machine">
+                    <button class="panel-prev" onclick="panelSlide(this,-1)">&#10094;</button>
+                    <button class="panel-next" onclick="panelSlide(this,1)">&#10095;</button>
+                    <div class="panel-dots"></div>
                 </div>
                 <div class="panel-content">
                     <span class="panel-number">04</span>
@@ -338,29 +284,20 @@
                 </div>
             </div>
 
-            <!-- PROJECT 05 — SpaceCraftVR -->
+            <!-- PROJECT 05 -->
             <div class="project-panel" data-index="4">
                 <div class="panel-image">
-                    <div class="project-image-slideshow">
-                        <div class="slideshow-container">
-                            <div class="slide active">
-                                <img src="SpaceCraftVR Backend Physics Integration/Screenshot 2026-01-20 205921.jpg" alt="SpaceCraftVR Mars Base" onerror="this.parentElement.style.background='var(--bg-raised)'">
-                            </div>
-                            <div class="slide">
-                                <img src="SpaceCraftVR Backend Physics Integration/Screenshot 2026-01-20 205940.jpg" alt="SpaceCraftVR Rover" onerror="this.style.display='none'">
-                            </div>
-                            <button class="slideshow-prev" onclick="changeSlide(this, -1)">&#10094;</button>
-                            <button class="slideshow-next" onclick="changeSlide(this, 1)">&#10095;</button>
-                            <div class="slideshow-dots"></div>
-                        </div>
-                    </div>
+                    <img class="panel-img active" src="spacecraftvr.png" alt="SpaceCraftVR Mars Base">
+                    <button class="panel-prev" onclick="panelSlide(this,-1)">&#10094;</button>
+                    <button class="panel-next" onclick="panelSlide(this,1)">&#10095;</button>
+                    <div class="panel-dots"></div>
                 </div>
                 <div class="panel-content">
                     <span class="panel-number">05</span>
                     <div class="panel-content-inner">
                         <p class="panel-meta">Physics Simulation · C++ / Unreal Engine</p>
                         <h3>SpaceCraftVR Backend Physics Integration</h3>
-                        <h4>Gas Pressurization & Force Simulation</h4>
+                        <h4>Gas Pressurization &amp; Force Simulation</h4>
                         <p class="panel-desc">Developed C++ gas pressurization and force simulation models for modular spacecraft environments, enabling realistic airlock and depressurization scenarios in virtual reality.</p>
                         <ul class="project-features">
                             <li>Data-driven gas pressurization using Ideal Gas Law</li>

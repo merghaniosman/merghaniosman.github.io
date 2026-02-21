@@ -799,44 +799,39 @@ section {
   }
 }
 
-/* ── Projects Section — Fullscreen Scroll-Snap ──────────── */
+/* ═══════════════════════════════════════════════════════════
+   PROJECTS — Fullscreen Scroll-Snap Panels
+   ═══════════════════════════════════════════════════════════ */
 
 .projects {
   padding: 0;
-  background: transparent;
 }
 
-/* Section header sits above the scroll container */
 .projects-header {
-  padding: 80px 0 0;
-  position: relative;
-  z-index: 10;
+  padding: 80px 24px 40px;
 }
 
-/* Scroll-snap wrapper */
+/* ── Scroll container ──────────────────────────────────── */
 .projects-scroll {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  position: relative;
-  /* hide scrollbar visually */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .projects-scroll::-webkit-scrollbar { display: none; }
 
-/* Progress rail — fixed inside the scroll container */
+/* ── Progress rail (right side) ────────────────────────── */
 .projects-progress {
   position: fixed;
-  right: 32px;
+  right: 28px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  z-index: 100;
-  pointer-events: none;
+  z-index: 200;
 }
 
 .progress-pip {
@@ -844,152 +839,148 @@ section {
   height: 6px;
   border-radius: 50%;
   background: var(--text-muted);
-  transition: all 0.4s ease;
-  pointer-events: all;
+  border: none;
   cursor: pointer;
-  border: 1px solid transparent;
+  padding: 0;
+  transition: background 0.3s, height 0.3s, border-radius 0.3s, box-shadow 0.3s;
 }
 
 .progress-pip.active {
   background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  height: 22px;
+  height: 24px;
   border-radius: 3px;
+  box-shadow: 0 0 8px var(--accent);
 }
 
-/* Each project panel = 100vh, scroll-snap */
+/* ── Each panel ─────────────────────────────────────────── */
 .project-panel {
   height: 100vh;
   scroll-snap-align: start;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Alternating layout — even panels flip image/text */
-.project-panel:nth-child(even) {
-  direction: rtl;
-}
-.project-panel:nth-child(even) > * {
-  direction: ltr;
-}
+/* Alternate: flip layout on even panels */
+.project-panel:nth-child(even) .panel-image { order: 2; }
+.project-panel:nth-child(even) .panel-content { order: 1; }
 
-/* ── Panel Image Side ──────────────────────────────────── */
+/* ── Image half ─────────────────────────────────────────── */
 .panel-image {
   position: relative;
-  overflow: hidden;
   background: var(--bg-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.panel-image .project-image-slideshow {
+/* All images hidden by default, shown when .active */
+.panel-img {
   position: absolute;
   inset: 0;
-  aspect-ratio: unset;
-  width: 100%;
-  height: 100%;
-}
-
-.panel-image .slideshow-container {
-  width: 100%;
-  height: 100%;
-}
-
-.panel-image .slide {
-  position: absolute;
-  inset: 0;
-}
-
-.panel-image .slide img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center;
-  padding: 28px;
-}
-
-/* Overlay gradient on image side blending into content */
-.panel-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 70%,
-    var(--bg-base) 100%
-  );
+  padding: 32px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
   pointer-events: none;
-  z-index: 2;
-}
-.project-panel:nth-child(even) .panel-image::after {
-  background: linear-gradient(
-    270deg,
-    transparent 70%,
-    var(--bg-base) 100%
-  );
 }
 
-/* Slideshow nav inside panel */
-.panel-image .slideshow-prev { left: 16px; z-index: 5; }
-.panel-image .slideshow-next { right: 16px; z-index: 5; }
-.panel-image .slideshow-dots { bottom: 20px; z-index: 5; }
+.panel-img.active {
+  opacity: 1;
+}
 
-/* ── Panel Content Side ────────────────────────────────── */
+/* Slide nav buttons */
+.panel-prev,
+.panel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(13,14,16,0.8);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  z-index: 10;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+.panel-prev { left: 12px; }
+.panel-next { right: 12px; }
+.panel-prev:hover,
+.panel-next:hover {
+  background: var(--accent);
+  color: #0d0e10;
+  border-color: var(--accent);
+}
+
+/* Dots */
+.panel-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.panel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.panel-dot.active {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+/* ── Content half ───────────────────────────────────────── */
 .panel-content {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 64px 56px;
-  position: relative;
+  padding: 60px 52px;
   background: var(--bg-base);
-  z-index: 3;
   overflow-y: auto;
-  /* hide inner scroll */
   scrollbar-width: none;
 }
 .panel-content::-webkit-scrollbar { display: none; }
 
-/* Giant background project number */
+/* Ghost project number */
 .panel-number {
   position: absolute;
-  top: -0.15em;
+  top: 0;
   right: -0.05em;
   font-family: var(--font-display);
-  font-size: clamp(140px, 16vw, 200px);
+  font-size: clamp(120px, 14vw, 180px);
   line-height: 1;
   color: transparent;
   -webkit-text-stroke: 1px rgba(255,255,255,0.04);
   pointer-events: none;
   user-select: none;
   letter-spacing: -0.02em;
+  z-index: 0;
 }
 
 .panel-content-inner {
   position: relative;
-  z-index: 2;
-}
-
-/* Text always visible — panel snap is the dramatic effect */
-.panel-content-inner .panel-meta,
-.panel-content-inner h3,
-.panel-content-inner h4,
-.panel-content-inner .panel-desc,
-.panel-content-inner .project-features,
-.panel-content-inner .project-tags,
-.panel-content-inner .project-links {
-  opacity: 1;
-  transform: none;
-}
-
-/* Subtle stagger-in when panel snaps into view */
-.project-panel .panel-content-inner .panel-meta,
-.project-panel .panel-content-inner h3,
-.project-panel .panel-content-inner h4,
-.project-panel .panel-content-inner .panel-desc,
-.project-panel .panel-content-inner .project-features,
-.project-panel .panel-content-inner .project-tags,
-.project-panel .panel-content-inner .project-links {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 1;
 }
 
 .panel-meta {
@@ -1003,39 +994,39 @@ section {
   align-items: center;
   gap: 0.75rem;
 }
-
 .panel-meta::before {
   content: '';
   display: inline-block;
-  width: 28px;
+  width: 24px;
   height: 1px;
   background: var(--accent);
+  flex-shrink: 0;
 }
 
 .panel-content-inner h3 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
   letter-spacing: 0.04em;
-  line-height: 1.0;
+  line-height: 1.05;
   color: var(--text-primary);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .panel-content-inner h4 {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.2rem;
 }
 
 .panel-desc {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.75;
-  max-width: 480px;
-  margin-bottom: 1.25rem;
+  max-width: 460px;
+  margin-bottom: 1.2rem;
   border-left: 2px solid var(--accent-dim);
   padding-left: 1rem;
 }
@@ -1043,12 +1034,12 @@ section {
 .project-features {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  margin-bottom: 1.5rem;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
 }
 
 .project-features li {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   padding-left: 1.1rem;
   position: relative;
@@ -1066,12 +1057,11 @@ section {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 1.25rem;
 }
 
 .tag {
   font-family: var(--font-mono);
-  font-size: 0.63rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -1080,75 +1070,36 @@ section {
   border-radius: 2px;
   transition: all var(--transition);
 }
-
 .tag:hover {
   color: var(--accent);
   border-color: var(--accent-dim);
 }
 
-.project-links { margin-top: 0.5rem; }
-
-.report-link {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: opacity var(--transition);
-}
-.report-link:hover { opacity: 0.7; }
-
-/* ── Responsive — stack on mobile ─────────────────────── */
+/* ── Mobile ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .projects-scroll {
     height: auto;
     overflow-y: visible;
     scroll-snap-type: none;
   }
-
   .project-panel {
     height: auto;
     grid-template-columns: 1fr;
-    scroll-snap-align: none;
     border-bottom: 1px solid var(--border);
   }
-
-  .project-panel:nth-child(even) {
-    direction: ltr;
-  }
-
+  .project-panel:nth-child(even) .panel-image { order: unset; }
+  .project-panel:nth-child(even) .panel-content { order: unset; }
   .panel-image {
-    aspect-ratio: 16 / 9;
-    position: relative;
+    height: 55vw;
+    min-height: 260px;
   }
-
-  .panel-image .project-image-slideshow {
-    position: relative;
-    height: 100%;
-    width: 100%;
+  .panel-img {
+    position: absolute;
+    padding: 20px;
   }
-
-  .panel-image::after { display: none; }
-
   .panel-content {
-    padding: 40px 28px;
+    padding: 36px 24px;
   }
-
   .panel-number { display: none; }
-
   .projects-progress { display: none; }
-
-  .panel-content-inner h3,
-  .panel-content-inner .panel-meta,
-  .panel-content-inner h4,
-  .panel-content-inner .panel-desc,
-  .panel-content-inner .project-features,
-  .panel-content-inner .project-tags,
-  .panel-content-inner .project-links {
-    opacity: 1;
-    transform: none;
-  }
 }
