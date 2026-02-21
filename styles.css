@@ -903,8 +903,9 @@ section {
 .panel-image .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  padding: 28px;
 }
 
 /* Overlay gradient on image side blending into content */
@@ -914,7 +915,7 @@ section {
   inset: 0;
   background: linear-gradient(
     90deg,
-    transparent 60%,
+    transparent 70%,
     var(--bg-base) 100%
   );
   pointer-events: none;
@@ -923,7 +924,7 @@ section {
 .project-panel:nth-child(even) .panel-image::after {
   background: linear-gradient(
     270deg,
-    transparent 60%,
+    transparent 70%,
     var(--bg-base) 100%
   );
 }
@@ -968,7 +969,7 @@ section {
   z-index: 2;
 }
 
-/* Entering animation — triggered via JS class */
+/* Text always visible — panel snap is the dramatic effect */
 .panel-content-inner .panel-meta,
 .panel-content-inner h3,
 .panel-content-inner h4,
@@ -976,18 +977,20 @@ section {
 .panel-content-inner .project-features,
 .panel-content-inner .project-tags,
 .panel-content-inner .project-links {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 1;
+  transform: none;
 }
 
-.project-panel.in-view .panel-content-inner .panel-meta    { opacity: 1; transform: none; transition-delay: 0.05s; }
-.project-panel.in-view .panel-content-inner h3             { opacity: 1; transform: none; transition-delay: 0.12s; }
-.project-panel.in-view .panel-content-inner h4             { opacity: 1; transform: none; transition-delay: 0.18s; }
-.project-panel.in-view .panel-content-inner .panel-desc    { opacity: 1; transform: none; transition-delay: 0.24s; }
-.project-panel.in-view .panel-content-inner .project-features { opacity: 1; transform: none; transition-delay: 0.30s; }
-.project-panel.in-view .panel-content-inner .project-tags  { opacity: 1; transform: none; transition-delay: 0.38s; }
-.project-panel.in-view .panel-content-inner .project-links { opacity: 1; transform: none; transition-delay: 0.44s; }
+/* Subtle stagger-in when panel snaps into view */
+.project-panel .panel-content-inner .panel-meta,
+.project-panel .panel-content-inner h3,
+.project-panel .panel-content-inner h4,
+.project-panel .panel-content-inner .panel-desc,
+.project-panel .panel-content-inner .project-features,
+.project-panel .panel-content-inner .project-tags,
+.project-panel .panel-content-inner .project-links {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
 
 .panel-meta {
   font-family: var(--font-mono);
